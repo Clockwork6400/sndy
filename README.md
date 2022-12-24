@@ -13,8 +13,6 @@
 
 > cd sndy/
 
-> /usr/local/bin/wish8.6 sndy.tcl
-
 > cat <<EOF > /home/$USER/.local/share/applications/sndy.desktop
 [Desktop Entry]
 Name=sndy
@@ -26,6 +24,10 @@ Type=Application
 #Icon=
 Categories=sysutils
 EOF
+
+#Запуск
+
+> /usr/local/bin/wish8.6 /opt/sndy/sndy.tcl
 
 #Удаление:
 
