@@ -1,19 +1,19 @@
 
 #Установка:
 
-> sudo pkg install tcl86 tk86
+% sudo pkg install tcl86 tk86
 
-> sudo mkdir -p /opt/sndy
+% sudo mkdir -p /opt/sndy
 
-> sudo chown -R $USER /opt/
+% sudo chown -R $USER /opt/
 
-> cd /opt/
+% cd /opt/
 
-> git clone https://github.com/Clockwork6400/sndy.git
+% git clone https://github.com/Clockwork6400/sndy.git
 
-> cd sndy/
+% cd sndy/
 
-> cat <<EOF > /home/$USER/.local/share/applications/sndy.desktop
+% cat <<EOF > /home/$USER/.local/share/applications/sndy.desktop
 [Desktop Entry]
 Name=sndy
 Comment=PROGRAM FOR SOUND SWITCHING IN FreeBSD
@@ -27,10 +27,10 @@ EOF
 
 #Запуск
 
-> /usr/local/bin/wish8.6 /opt/sndy/sndy.tcl
+% /usr/local/bin/wish8.6 /opt/sndy/sndy.tcl
 
 #Удаление:
 
-> rm /home/$USER/.local/share/applications/sndy.desktop
+% rm /home/$USER/.local/share/applications/sndy.desktop
 
-> rm -rf /opt/sndy/
+% rm -rf /opt/sndy/
