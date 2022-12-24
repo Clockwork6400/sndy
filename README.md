@@ -13,16 +13,16 @@
 
 % cd sndy/
 
-% cat <<EOF > /home/$USER/.local/share/applications/sndy.desktop
-[Desktop Entry]
-Name=sndy
-Comment=PROGRAM FOR SOUND SWITCHING IN FreeBSD
-Keywords=
-Exec=/usr/local/bin/wish8.6 /opt/sndy/sndy.tcl
-Terminal=false
-Type=Application
-#Icon=
-Categories=sysutils
+% cat <<EOF > /home/$USER/.local/share/applications/sndy.desktop \
+[Desktop Entry] \
+Name=sndy \
+Comment=PROGRAM FOR SOUND SWITCHING IN FreeBSD \
+Keywords= \
+Exec=/usr/local/bin/wish8.6 /opt/sndy/sndy.tcl \
+Terminal=false \
+Type=Application \
+#Icon= \
+Categories=sysutils \
 EOF
 
 #Запуск
