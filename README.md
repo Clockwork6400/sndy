@@ -13,7 +13,8 @@
 
 % cd sndy/
 
-% cat <<EOF > /home/$USER/.local/share/applications/sndy.desktop \
+%
+cat <<EOF > /home/$USER/.local/share/applications/sndy.desktop \
 [Desktop Entry] \
 Name=sndy \
 Comment=PROGRAM FOR SOUND SWITCHING IN FreeBSD \
