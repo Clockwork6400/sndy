@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=sndy
+Comment=Sound Switcher
+Keywords=
+Exec=sndy
+Terminal=false
+Type=Application
+#Icon=
+Categories=sysutils
