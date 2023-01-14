@@ -31,6 +31,12 @@ if { "$DI" == "" } {
         puts "Error: no DISPLAY environment variable specified"
         exit
 }
+set TTY [exec w | awk {/w/} | awk {/:0 /}]
+	if { "$TTY" == "" } {
+	puts "Error: no DISPLAY environment variable specified"
+	exit
+}
+
 set pcm [exec sysctl -n hw.snd.default_unit ];
 
 grid [label .myLabel -text "Выбрано устройство: pcm$pcm" -textvariable labelText -font Tahoma];
