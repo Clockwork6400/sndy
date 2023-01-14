@@ -1,7 +1,7 @@
 #!/usr/local/bin/wish8.6
 
 #
-# Copyright (c) 2022, clockwork@freebsd.org
+# Copyright (c) 2022, Clockwork
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,161 +26,84 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-set pcm [exec sysctl -n hw.snd.default_unit ]; 
-
-grid [label .myLabel -text "Выбрано устройство: pcm$pcm" -textvariable labelText -font Tahoma]
-
-set pcm0 [ exec cat /dev/sndstat | awk {/^pcm0/} ];
-set pcm1 [ exec cat /dev/sndstat | awk {/^pcm1/} ];
-set pcm2 [ exec cat /dev/sndstat | awk {/^pcm2/} ];
-set pcm3 [ exec cat /dev/sndstat | awk {/^pcm3/} ];
-set pcm4 [ exec cat /dev/sndstat | awk {/^pcm4/} ];
-set pcm5 [ exec cat /dev/sndstat | awk {/^pcm5/} ];
-set pcm6 [ exec cat /dev/sndstat | awk {/^pcm6/} ];
-set pcm7 [ exec cat /dev/sndstat | awk {/^pcm7/} ];
-set pcm8 [ exec cat /dev/sndstat | awk {/^pcm8/} ];
-set pcm9 [ exec cat /dev/sndstat | awk {/^pcm9/} ];
-set pcm10 [ exec cat /dev/sndstat | awk {/^pcm10/} ];
-set pcm11 [ exec cat /dev/sndstat | awk {/^pcm11/} ];
-set pcm12 [ exec cat /dev/sndstat | awk {/^pcm12/} ];
-
-
-proc myEvent0 { } {
-	global labelText
-	exec sysctl hw.snd.default_unit=0
-	puts "sysctl hw.snd.default_unit=0"
-	set labelText "Выбрано устройство: pcm0" 
+set DI [exec ls -l /tmp/.X11-unix | awk {/X0/}]
+if { "$DI" == "" } {
+        puts "Error: no DISPLAY environment variable specified"
+        exit
 }
+set pcm [exec sysctl -n hw.snd.default_unit ];
 
-proc myEvent1 { } {
-	global labelText
- 	exec sysctl hw.snd.default_unit=1
-	puts "sysctl hw.snd.default_unit=1"
-	set labelText "Выбрано устройство: pcm1" 
-}
+grid [label .myLabel -text "Выбрано устройство: pcm$pcm" -textvariable labelText -font Tahoma];
+grid .myLabel -row 0 -column 0
 
-proc myEvent2 { } {
-	global labelText
- 	exec sysctl hw.snd.default_unit=2
-	puts "sysctl hw.snd.default_unit=2"
-	set labelText "Выбрано устройство: pcm2" 
-}
-
-proc myEvent3 { } {
-	global labelText
- 	exec sysctl hw.snd.default_unit=3
-	puts "sysctl hw.snd.default_unit=3"
-	set labelText "Выбрано устройство: pcm3"
-}
-
-proc myEvent4 { } {
-	global labelText
- 	exec sysctl hw.snd.default_unit=4
-	puts "sysctl hw.snd.default_unit=4"
-	set labelText "Выбрано устройство: pcm4" 
-}
-
-proc myEvent5 { } {
-	global labelText
- 	exec sysctl hw.snd.default_unit=5
-	puts "sysctl hw.snd.default_unit=5"
-	set labelText "Выбрано устройство: pcm5" 
-}
-
-proc myEvent6 { } {
-	global labelText
- 	exec sysctl hw.snd.default_unit=6
-	puts "sysctl hw.snd.default_unit=6"
-	set labelText "Выбрано устройство: pcm6" 
-}
-
-proc myEvent7 { } {
- 	exec sysctl hw.snd.default_unit=7
-	puts "sysctl hw.snd.default_unit=7"
-	set labelText "Выбрано устройство: pcm7" 
-}
-
-proc myEvent8 { } {
- 	exec sysctl hw.snd.default_unit=8
-	puts "sysctl hw.snd.default_unit=8"
-	set labelText "Выбрано устройство: pcm8" 
-}
-
-proc myEvent9 { } {
- 	exec sysctl hw.snd.default_unit=9
-	puts "sysctl hw.snd.default_unit=9"
-	set labelText "Выбрано устройство: pcm9" 
-}
-
-proc myEvent10 { } {
- 	exec sysctl hw.snd.default_unit=10
-	puts "sysctl hw.snd.default_unit=10"
-	set labelText "Выбрано устройство: pcm10" 
-}
-
-proc myEvent11 { } {
- 	exec sysctl hw.snd.default_unit=11
-	puts "sysctl hw.snd.default_unit=11"
-	set labelText "Выбрано устройство: pcm11" 
-}
-
-proc myEvent12 { } {
- 	exec sysctl hw.snd.default_unit=12
-	puts "sysctl hw.snd.default_unit=12"
-	set labelText "Выбрано устройство: pcm12" 
-}
+set pcm0 [ exec awk {/^pcm0/} /dev/sndstat ];
+set pcm1 [ exec awk {/^pcm1/} /dev/sndstat ];
+set pcm2 [ exec awk {/^pcm2/} /dev/sndstat ];
+set pcm3 [ exec awk {/^pcm3/} /dev/sndstat ];
+set pcm4 [ exec awk {/^pcm4/} /dev/sndstat ];
+set pcm5 [ exec awk {/^pcm5/} /dev/sndstat ];
+set pcm6 [ exec awk {/^pcm6/} /dev/sndstat ];
+set pcm7 [ exec awk {/^pcm7/} /dev/sndstat ];
+set pcm8 [ exec awk {/^pcm8/} /dev/sndstat ];
+set pcm9 [ exec awk {/^pcm9/} /dev/sndstat ];
+set pcm10 [ exec awk {/^pcm10/} /dev/sndstat ];
+set pcm11 [ exec awk {/^pcm11/} /dev/sndstat ];
+set pcm12 [ exec awk {/^pcm12/} /dev/sndstat ];
 
 if {$pcm0 != "" } {
-grid [button .myButton0  -text "$pcm0" -command myEvent0]
-bind .  ".myButton0 invoke"
+ttk::button .bt1 -text "$pcm0" -command { func1 0 }
+grid .bt1 -row 2 -column 0
 }
 if {$pcm1 != "" } {
-grid [button .myButton1  -text "$pcm1" -command myEvent1]
-bind .  ".myButton1 invoke"
+ttk::button .bt2 -text "$pcm1" -command { func1 1 }
+grid .bt2 -row 3 -column 0
 }
 if {$pcm2 != "" } {
-grid [button .myButton2  -text "$pcm2" -command myEvent2]
-bind .  ".myButton2 invoke"
+ttk::button .bt3 -text "$pcm2" -command { func1 2 }
+grid .bt3 -row 4 -column 0
 }
 if {$pcm3 != "" } {
-grid [button .myButton3  -text "$pcm3" -command myEvent3]
-bind .  ".myButton3 invoke"
+ttk::button .bt4 -text "$pcm3" -command { func1 3 }
+grid .bt4 -row 5 -column 0
 }
 if {$pcm4 != "" } {
-grid [button .myButton4  -text "$pcm4" -command myEvent4]
-bind .  ".myButton4 invoke"
+ttk::button .bt5 -text "$pcm4" -command { func1 4 }
+grid .bt5 -row 6 -column 0
 }
 if {$pcm5 != "" } {
-grid [button .myButton5  -text "$pcm5" -command myEvent5]
-bind .  ".myButton5 invoke"
+ttk::button .bt6 -text "$pcm5" -command { func1 5 }
+grid .bt6 -row 7 -column 0
 }
 if {$pcm6 != "" } {
-grid [button .myButton6  -text "$pcm6" -command myEvent6]
-bind .  ".myButton6 invoke"
+ttk::button .bt7 -text "$pcm6" -command { func1 6 }
+grid .bt7 -row 8 -column 0
 }
 if {$pcm7 != "" } {
-grid [button .myButton7  -text "$pcm7" -command myEvent7]
-bind .  ".myButton7 invoke"
+ttk::button .bt8 -text "$pcm7" -command { func1 7 }
+grid .bt8 -row 9 -column 0
 }
 if {$pcm8 != "" } {
-grid [button .myButton8  -text "$pcm8" -command myEvent8]
-bind .  ".myButton8 invoke"
+ttk::button .bt9 -text "$pcm8" -command { func1 8 }
+grid .bt9 -row 10 -column 0
 }
 if {$pcm9 != "" } {
-grid [button .myButton9  -text "$pcm9" -command myEvent9]
-bind .  ".myButton9 invoke"
+ttk::button .bt10 -text "$pcm9" -command { func1 9 }
+grid .bt10 -row 11 -column 0
 }
 if {$pcm10 != "" } {
-grid [button .myButton10  -text "$pcm10" -command myEvent10]
-bind .  ".myButton10 invoke"
+ttk::button .bt11 -text "$pcm10" -command { func1 10 }
+grid .bt11 -row 12 -column 0
 }
 if {$pcm11 != "" } {
-grid [button .myButton11  -text "$pcm11" -command myEvent11]
-bind .  ".myButton11 invoke"
+ttk::button .bt12 -text "$pcm11" -command { func1 11 }
+grid .bt12 -row 13 -column 0
 }
-if {$pcm12 != "" } {
-grid [button .myButton12  -text "$pcm12" -command myEvent12]
-bind .  ".myButton12 invoke"
+
+proc func1 { var2 } {
+	global labelText
+	exec sysctl hw.snd.default_unit=$var2
+	puts "sysctl hw.snd.default_unit=$var2"
+	set labelText "Выбрано устройство: pcm$var2"
 }
 
 frame .frame4 
@@ -191,7 +114,7 @@ scale .frame4.timeout -width 10 -orient horizontal -from 0 -to 10 -tickinterval 
 grid .frame4.l0 -column 1 -row 0 -sticky nwes
 grid .frame4.timeout -column 1 -row 1 -sticky nwes
 
-# Паковка фреймов
+# паковка фреймов
 grid .frame4 
 
 set tactq [ exec mixer vol ]
@@ -213,4 +136,3 @@ exec mixer vol $tact
 
 set labelText2 "VOL: $tact"
 }
-
