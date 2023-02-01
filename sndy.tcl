@@ -37,75 +37,36 @@ set TTY [exec w | awk {/w/} | awk {/:0 /}]
 	exit
 }
 
-set pcm [exec sysctl -n hw.snd.default_unit ];
+set pcmx [exec sysctl -n hw.snd.default_unit ];
 
-grid [label .myLabel -text "Выбрано устройство: pcm$pcm" -textvariable labelText -font Tahoma];
+grid [label .myLabel -text "Выбрано устройство: pcm$pcmx" -textvariable labelText -font Tahoma];
 grid .myLabel -row 0 -column 0
 
-set pcm0 [ exec awk {/^pcm0/} /dev/sndstat ];
-set pcm1 [ exec awk {/^pcm1/} /dev/sndstat ];
-set pcm2 [ exec awk {/^pcm2/} /dev/sndstat ];
-set pcm3 [ exec awk {/^pcm3/} /dev/sndstat ];
-set pcm4 [ exec awk {/^pcm4/} /dev/sndstat ];
-set pcm5 [ exec awk {/^pcm5/} /dev/sndstat ];
-set pcm6 [ exec awk {/^pcm6/} /dev/sndstat ];
-set pcm7 [ exec awk {/^pcm7/} /dev/sndstat ];
-set pcm8 [ exec awk {/^pcm8/} /dev/sndstat ];
-set pcm9 [ exec awk {/^pcm9/} /dev/sndstat ];
-set pcm10 [ exec awk {/^pcm10/} /dev/sndstat ];
-set pcm11 [ exec awk {/^pcm11/} /dev/sndstat ];
-set pcm12 [ exec awk {/^pcm12/} /dev/sndstat ];
+set fn "/dev/sndstat"
+if {[catch {set fd [open $fn r]} err]} {
+	puts stderr "Error: $err"
+	exit 2
+}
+set content [read $fd]
+close $fd
 
-if {$pcm0 != "" } {
-ttk::button .bt1 -text "$pcm0" -command { func1 0 }
-grid .bt1 -row 2 -column 0 -sticky nwes
-}
-if {$pcm1 != "" } {
-ttk::button .bt2 -text "$pcm1" -command { func1 1 }
-grid .bt2 -row 3 -column 0 -sticky nwes
-}
-if {$pcm2 != "" } {
-ttk::button .bt3 -text "$pcm2" -command { func1 2 }
-grid .bt3 -row 4 -column 0 -sticky nwes
-}
-if {$pcm3 != "" } {
-ttk::button .bt4 -text "$pcm3" -command { func1 3 }
-grid .bt4 -row 5 -column 0 -sticky nwes
-}
-if {$pcm4 != "" } {
-ttk::button .bt5 -text "$pcm4" -command { func1 4 }
-grid .bt5 -row 6 -column 0 -sticky nwes
-}
-if {$pcm5 != "" } {
-ttk::button .bt6 -text "$pcm5" -command { func1 5 }
-grid .bt6 -row 7 -column 0 -sticky nwes
-}
-if {$pcm6 != "" } {
-ttk::button .bt7 -text "$pcm6" -command { func1 6 }
-grid .bt7 -row 8 -column 0 -sticky nwes
-}
-if {$pcm7 != "" } {
-ttk::button .bt8 -text "$pcm7" -command { func1 7 }
-grid .bt8 -row 9 -column 0 -sticky nwes
-}
-if {$pcm8 != "" } {
-ttk::button .bt9 -text "$pcm8" -command { func1 8 }
-grid .bt9 -row 10 -column 0 -sticky nwes
-}
-if {$pcm9 != "" } {
-ttk::button .bt10 -text "$pcm9" -command { func1 9 }
-grid .bt10 -row 11 -column 0 -sticky nwes
-}
-if {$pcm10 != "" } {
-ttk::button .bt11 -text "$pcm10" -command { func1 10 }
-grid .bt11 -row 12 -column 0 -sticky nwes
-}
-if {$pcm11 != "" } {
-ttk::button .bt12 -text "$pcm11" -command { func1 11 }
-grid .bt12 -row 13 -column 0 -sticky nwes
+set result {}
+foreach line [split $content \n] {
+        if {[regexp {^pcm\d:} $line]} {
+                lappend result $line
+        }
 }
 
-proc func1 { var2 } {
+set max [llength $result]
+for {set i 0} {$i < $max} {incr i} {
+        set var2 [lindex $result $i]
+        if {$var2 != "" } {
+        ttk::button .bt$i -text "$var2" -command [list func1 $i]
+        grid .bt$i -row 1$i -column 0 -sticky nwes
+        }
+}
+
+proc func1 {var2} {
 	global labelText
 	exec sysctl hw.snd.default_unit=$var2
 	puts "sysctl hw.snd.default_unit=$var2"
