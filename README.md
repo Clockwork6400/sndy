@@ -1,33 +1,33 @@
 
 # FreeBSD Ports
-#Установка / Installation:
+#Installation:
 
 >  pkg install sysutils/sndy 
 > 
-or / или
+or
 
 > cd /usr/ports/sysutils/sndy
 > make install clean 
 
-#Запуск / Launch:
+#Launch:
 
 > sndy
 
-or / или
+or
 mouse from the menu
 
-#Удаление / Removal:
+#Removal:
 
 > pkg remove sysutils/sndy
 > 
-or / или
+or 
 > cd /usr/ports/sysutils/sndy
 > make deinstall
 
 ## Github
-#Установка / Installation:
+#Installation:
 
-(зависимости / dependencies):
+(dependencies):
 > sudo pkg install tcl86 tk86
 
 > sudo mkdir -p /opt/sndy
@@ -41,14 +41,14 @@ or / или
 > cp sndy/sndy.desktop /usr/local/share/applications/sndy.desktop
 
 
-#Запуск / Launch:
+#Launch:
 
 > /usr/local/bin/wish8.6 /opt/sndy/sndy.tcl
 > 
-or / или
+or 
 > mouse from the menu
 
-#Удаление / Removal:
+#Removal:
 
 > rm /usr/local/share/applications/sndy.desktop
 
@@ -56,15 +56,18 @@ or / или
 
 ---
 
-sndy - программа для переключения звука, которая позволит перенаправить вывод звука на любой порт вашего компьютера.
+sndy - is an audio switching program that allows you to redirect sound output to any port of your computer.
 
-Кнопки в программе соответствуют строке с инитом в вашем файле /dev/sndstat. Нажатие кнопки переключает вывод звука с помощью команды sysctl.hw.snd.default_unit=Х.
+The buttons in the program correspond to the init line in your /dev/sndstat. Pressing the button toggles the sound output with the sysctl command
+hw.snd.default_unit=X. 
 
-Не переключать аудиовыход во время воспроизведения одного звукового файла. Звуковая система OSS может одновременно воспроизводить звук только на одном устройстве. Поэтому перед переключением нужно дождаться окончания или завершения предыдущего звукового файла.
+Do not switch audio output during playback of a single audio file. The OSS sound system can only play sound to one device
+at a time. Therefore, you need to wait for the end or completion of the previous sound file before switching.
 
-Полоса прокрутки может использоваться для изменения уровня громкости. Громкость изменяется при помощи команды mixer vol <индикатор>*10. То есть каждая цифра от 0 до 10 умноженная на 10 соответствут проценту громкости.
+The scroll bar can be used to change the volume level. The volume is changed using the mixer vol <indicator>*10 command. That is, each digit
+from 0 to 10 multiplied by 10 corresponds to a percentage of volume.
 
-Выбраный инит pcm<X> сохраняется только до перезагрузки. Для сохранения вывода звука по умолчанию нужно добавить hw.snd.default_unit=<номер> в системный файл /etc/sysctl.conf
+The selected pcm<X> is only saved until you reboot. To save the default sound output, add hw.snd.default_unit=<number> to the system file /etc/sysctl.conf
 
 ---
 
