@@ -6,7 +6,7 @@
 > 
 or
 
-> cd /usr/ports/sysutils/sndy
+> cd /usr/ports/sysutils/sndy\
 > make install clean 
 
 #Launch:
@@ -30,14 +30,10 @@ or
 (dependencies):
 > sudo pkg install tcl86 tk86
 
-> sudo mkdir -p /opt/sndy
-
-> sudo chown -R $USER /opt/
-
-> cd /opt/
-
-> git clone https://github.com/Clockwork6400/sndy.git
-
+> sudo mkdir -p /opt/sndy\
+> sudo chown -R $USER /opt/\
+> cd /opt/\
+> git clone https://github.com/Clockwork6400/sndy.git \
 > cp sndy/sndy.desktop /usr/local/share/applications/sndy.desktop
 
 
@@ -50,8 +46,7 @@ or
 
 #Removal:
 
-> rm /usr/local/share/applications/sndy.desktop
-
+> rm /usr/local/share/applications/sndy.desktop\
 > rm -rf /opt/sndy/
 
 ---
