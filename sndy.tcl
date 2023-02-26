@@ -26,16 +26,17 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-set DI [exec ls -l /tmp/.X11-unix | awk {/X0/}]
-if { "$DI" == "" } {
-        puts "Error: no DISPLAY environment variable specified"
-        exit
-}
-set TTY [exec w | awk {/w/} | awk {/:0 /}]
-	if { "$TTY" == "" } {
-	puts "Error: no DISPLAY environment variable specified"
-	exit
-}
+#Checking for a running session is not suitable for WAYLAND environments.
+#set DI [exec ls -l /tmp/.X11-unix | awk {/X0/}]
+#if { "$DI" == "" } {
+#        puts "Error: no DISPLAY environment variable specified"
+#        exit
+#}
+#set TTY [exec w | awk {/w/} | awk {/:0 /}]
+#	if { "$TTY" == "" } {
+#	puts "Error: no DISPLAY environment variable specified"
+#	exit
+#}
 
 set pcmx [exec sysctl -n hw.snd.default_unit ];
 
