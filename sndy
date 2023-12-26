@@ -26,6 +26,17 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+# VERSION 0.0.6
+
+set os_version [exec uname -r]
+
+# Определяем, какую команду использовать в зависимости от версии ОС
+if {$os_version >= 14.0} {
+    set vol_command "vol.volume=0."
+} else {
+    set vol_command "vol"
+}
+
 #Checking for a running session is not suitable for WAYLAND environments.
 #set DI [exec ls -l /tmp/.X11-unix | awk {/X0/}]
 #if { "$DI" == "" } {
@@ -85,7 +96,12 @@ grid .frame4.timeout -column 1 -row 1 -sticky nwes
 # паковка фреймов
 grid .frame4 
 
-set tactq [ exec mixer vol ]
+#set tactq [ exec mixer vol.volume=0. ]
+if {$os_version >= 14.0} {
+    set tactq [ exec mixer ${vol_command} ]
+} else {
+    set tactq [ exec mixer ${vol_command} " " ]
+}
 regexp {([0-9][0-9]*)} "$tactq" var
 set asd [expr $var / 10]; 
 #puts "VOL: $var"
@@ -94,13 +110,40 @@ grid [label .myLabel2 -text "VOL: $var" -textvariable labelText2]
 
 set tact $var
 proc selecttact {i} {
+global vol_command
 global labelText2
 global tact 
+global os_version
 
 set tact $i
 set tact [expr $tact * 10];
 puts "set VOL: $tact"
-exec mixer vol $tact
+#exec mixer vol.volume=0.$tact
+#exec mixer $vol_command$tact
+if {$os_version >= 14.0} {
+    exec mixer ${vol_command}$tact
+} else {
+    exec mixer ${vol_command} $tact
+}
+
+if {$tact == 100} {
+	if {$os_version >= 14.0} {
+            exec mixer vol.volume=1.00
+	} else {
+	    exec mixer vol 100
+	}
+    } else {
+        if {$os_version >= 14.0} {
+            exec mixer ${vol_command}$tact
+        } else {
+            exec mixer ${vol_command} $tact
+        }
+    }
+#if {$tact == 100} {
+#        exec mixer vol.volume=1.00
+#    } else {
+#        exec mixer $vol_command$tact
+#    }
 
 set labelText2 "VOL: $tact"
 }
